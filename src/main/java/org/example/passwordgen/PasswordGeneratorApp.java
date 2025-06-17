@@ -32,18 +32,19 @@ public class PasswordGeneratorApp {
         boolean includeDigits = sc.next().equalsIgnoreCase("y");
         sc.nextLine();
 
-        System.out.println("What is this password for? ");
-        String purpose = sc.nextLine();
-
         System.out.println("Include special characters? (y/n): ");
         boolean includeSpecial = sc.next().equalsIgnoreCase("y");
         sc.nextLine();
 
+        System.out.println("What is this password for? ");
+        String purpose = sc.nextLine();
+
         String password = generatePassword(length, includeUpper, includeDigits, includeSpecial);
         System.out.println("Generated password: " + password);
 
-        System.out.println("Enter your email address to send the password to: ");
-        String toEmail = sc.nextLine();
+//        System.out.println("Enter your email address to send the password to: ");
+//        String toEmail = sc.nextLine();
+        String toEmail = dotenv.get("EMAILADDRESS");
         sendEmail(toEmail, purpose, password);
     }
 
