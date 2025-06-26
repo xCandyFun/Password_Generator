@@ -13,50 +13,75 @@ public class PasswordGeneratorGUI extends JFrame {
     public PasswordGeneratorGUI(){
         setTitle("Password Generator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500,300);
-        setLayout(new GridLayout(8,2,5,5));
+        setSize(500,400);
+        //setLayout(new GridLayout(8,2,5,5)); OLD
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5,5,5,5); // padding between
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
 
-        add(new JLabel("Password Length:"));
+        add(new JLabel("Password Length:"), gbc);
+        gbc.gridx = 1;
         lengthField = new JTextField("25");
-        add(lengthField);
+        add(lengthField, gbc);
 
-        add(new JLabel("Password Strength:"));
-        strengthlabel = new JLabel("");
-        strengthlabel.setFont(new Font("Arial", Font.BOLD, 12));
-        add(strengthlabel);
-
+        gbc.gridy++;
+        gbc.gridx = 0;
         upperCaseBox = new JCheckBox("Include Uppercase Letters");
-        add(upperCaseBox);
-        add(new JLabel(" ")); // Empty cell
+        add(upperCaseBox, gbc);
+        //add(new JLabel(" ")); // Empty cell
 
+        gbc.gridy++;
         digitsBox = new JCheckBox("Include Uppercase Letters");
-        add(digitsBox);
-        add(new JLabel(" "));
+        add(digitsBox, gbc);
+        //add(new JLabel(" "));
 
+        gbc.gridy++;
         specialCharBox = new JCheckBox("Include Special Characters");
-        add(specialCharBox);
-        add(new JLabel(" "));
+        add(specialCharBox, gbc);
+        //add(new JLabel(" "));
 
-        add(new JLabel("Password Purpose (e.g., Google)"));
+        gbc.gridy++;
+        add(new JLabel("Password Purpose (e.g., Google)"), gbc);
+        gbc.gridx = 1;
         purposeField = new JTextField();
-        add(purposeField);
+        add(purposeField, gbc);
 
-        add(new JLabel("Send to Email:"));
+        gbc.gridy++;
+        gbc.gridx = 0;
+        add(new JLabel("Send to Email:"), gbc);
+        gbc.gridx = 1;
         emailField = new JTextField();
-        add(emailField);
+        add(emailField, gbc);
 
+        gbc.gridy++;
+        gbc.gridx = 0;
         generateButton = new JButton("Generate Password");
         generateButton.addActionListener(this::generatePassword);
-        add(generateButton);
+        add(generateButton, gbc);
 
+        gbc.gridx = 1;
         sendEmailButton = new JButton("Send email");
         sendEmailButton.addActionListener(this::sendEmail);
-        add(sendEmailButton);
+        add(sendEmailButton, gbc);
 
-        add(new JLabel("Generated Password:"));
+        gbc.gridy++;
+        gbc.gridx = 0;
+        add(new JLabel("Generated Password:"), gbc);
+        gbc.gridx = 1;
         passwordField = new JTextField();
         passwordField.setEditable(false);
-        add(passwordField);
+        add(passwordField, gbc);
+
+        gbc.gridy++;
+        gbc.gridx = 0;
+        add(new JLabel("Password Strength:"), gbc);
+        gbc.gridx = 1;
+        strengthlabel = new JLabel("");
+        strengthlabel.setFont(new Font("Arial", Font.BOLD, 12));
+        add(strengthlabel, gbc);
 
         setVisible(true);
     }
