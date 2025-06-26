@@ -8,6 +8,7 @@ public class PasswordGeneratorGUI extends JFrame {
     private JTextField lengthField, purposeField, emailField, passwordField;
     private JCheckBox upperCaseBox, digitsBox, specialCharBox;
     private JButton generateButton, sendEmailButton;
+    private JLabel strengthlabel;
 
     public PasswordGeneratorGUI(){
         setTitle("Password Generator");
@@ -18,6 +19,11 @@ public class PasswordGeneratorGUI extends JFrame {
         add(new JLabel("Password Length:"));
         lengthField = new JTextField("25");
         add(lengthField);
+
+        add(new JLabel("Password Strength:"));
+        strengthlabel = new JLabel("");
+        strengthlabel.setFont(new Font("Arial", Font.BOLD, 12));
+        add(strengthlabel);
 
         upperCaseBox = new JCheckBox("Include Uppercase Letters");
         add(upperCaseBox);
@@ -56,16 +62,32 @@ public class PasswordGeneratorGUI extends JFrame {
     }
 
     private void generatePassword(ActionEvent e) {
-        int length = Integer.parseInt(lengthField.getText());
-        boolean includeUpper = upperCaseBox.isSelected();
-        boolean includeDigits = digitsBox.isSelected();
-        boolean includeSpecial = specialCharBox.isSelected();
+        try {
+            int length = Integer.parseInt(lengthField.getText());
+            boolean includeUpper = upperCaseBox.isSelected();
+            boolean includeDigits = digitsBox.isSelected();
+            boolean includeSpecial = specialCharBox.isSelected();
 
-        String password = PasswordGeneratorApp.generatePassword(length, includeUpper, includeDigits, includeSpecial);
-        passwordField.setText(password);
+            String password = PasswordGeneratorApp.generatePassword(length, includeUpper, includeDigits, includeSpecial);
+            passwordField.setText(password);
 
-        // Copy to Clipboard
-        //Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new java.awt.datatransfer.StringSelection(password), null);
+            // Copy to Clipboard
+            //Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new java.awt.datatransfer.StringSelection(password), null);
+
+            String strength = evaluatePasswordStrength(password);
+            strengthlabel.setText(strength);
+            strengthlabel.setForeground(switch (strength) {
+                case "Weak" -> Color.RED;
+                case "Medium" -> Color.ORANGE;
+                case "Strong" -> new Color(0, 128, 0); //Dark Green
+                default -> Color.BLACK;
+            });
+        }catch (NumberFormatException ex){
+            JOptionPane.showMessageDialog(this,
+                    "password length must be a number.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void sendEmail(ActionEvent e) {
@@ -90,6 +112,28 @@ public class PasswordGeneratorGUI extends JFrame {
         emailField.setText("");
         purposeField.setText("");
         passwordField.setText("");
+    }
+
+    private String evaluatePasswordStrength(String password){
+        int length = password.length();
+        boolean hasUpper = password.matches(".*[A-Z].*");
+        boolean hasLower = password.matches(".*[a-z].*");
+        boolean hasDigit = password.matches(".*[\\d].*");
+        boolean hasSpecial = password.matches(".*[^a-zA-Z0-9].*");
+
+        int score = 0;
+        if (length >= 8) score++;
+        if (length >= 12) score++;
+        if (hasUpper && hasLower) score++;
+        if (hasDigit) score++;
+        if (hasSpecial) score++;
+
+        return switch (score){
+            case 0,1,2 -> "Weak";
+            case 3,4 -> "Medium";
+            case 5 -> "Strong";
+            default -> "Unknown";
+        };
     }
 
     public static void main(String[] args) {
