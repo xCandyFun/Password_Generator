@@ -8,7 +8,7 @@ public class PasswordGeneratorGUI extends JFrame {
     private final JTextField lengthField, purposeField, emailField, passwordField;
     private final JCheckBox upperCaseBox, digitsBox, specialCharBox;
     private final JButton generateButton, sendEmailButton;
-    private final JLabel strengthlabel;
+    private final JLabel strengthLabel;
 
     public PasswordGeneratorGUI(){
         setTitle("Password Generator");
@@ -75,9 +75,9 @@ public class PasswordGeneratorGUI extends JFrame {
         gbc.gridx = 0;
         add(new JLabel("Password Strength:"), gbc);
         gbc.gridx = 1;
-        strengthlabel = new JLabel("");
-        strengthlabel.setFont(new Font("Arial", Font.BOLD, 12));
-        add(strengthlabel, gbc);
+        strengthLabel = new JLabel("");
+        strengthLabel.setFont(new Font("Arial", Font.BOLD, 12));
+        add(strengthLabel, gbc);
 
         setVisible(true);
     }
@@ -96,8 +96,8 @@ public class PasswordGeneratorGUI extends JFrame {
             //Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new java.awt.datatransfer.StringSelection(password), null);
 
             String strength = evaluatePasswordStrength(password);
-            strengthlabel.setText(strength);
-            strengthlabel.setForeground(switch (strength) {
+            strengthLabel.setText(strength);
+            strengthLabel.setForeground(switch (strength) {
                 case "Weak" -> Color.RED;
                 case "Medium" -> Color.ORANGE;
                 case "Strong" -> new Color(0, 128, 0); //Dark Green
