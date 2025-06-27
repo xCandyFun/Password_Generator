@@ -14,7 +14,6 @@ public class PasswordGeneratorGUI extends JFrame {
         setTitle("Password Generator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500,400);
-        //setLayout(new GridLayout(8,2,5,5)); OLD
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5,5,5,5); // padding between
@@ -31,17 +30,14 @@ public class PasswordGeneratorGUI extends JFrame {
         gbc.gridx = 0;
         upperCaseBox = new JCheckBox("Include Uppercase Letters");
         add(upperCaseBox, gbc);
-        //add(new JLabel(" ")); // Empty cell
 
         gbc.gridy++;
         digitsBox = new JCheckBox("Include Uppercase Letters");
         add(digitsBox, gbc);
-        //add(new JLabel(" "));
 
         gbc.gridy++;
         specialCharBox = new JCheckBox("Include Special Characters");
         add(specialCharBox, gbc);
-        //add(new JLabel(" "));
 
         gbc.gridy++;
         add(new JLabel("Password Purpose (e.g., Google)"), gbc);
