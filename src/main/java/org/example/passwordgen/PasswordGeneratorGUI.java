@@ -5,10 +5,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class PasswordGeneratorGUI extends JFrame {
-    private JTextField lengthField, purposeField, emailField, passwordField;
-    private JCheckBox upperCaseBox, digitsBox, specialCharBox;
-    private JButton generateButton, sendEmailButton;
-    private JLabel strengthlabel;
+    private final JTextField lengthField, purposeField, emailField, passwordField;
+    private final JCheckBox upperCaseBox, digitsBox, specialCharBox;
+    private final JButton generateButton, sendEmailButton;
+    private final JLabel strengthlabel;
 
     public PasswordGeneratorGUI(){
         setTitle("Password Generator");
